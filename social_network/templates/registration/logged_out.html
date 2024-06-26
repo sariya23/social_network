@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Log-out</h1>
+<p>
+    Вы вышли из аккаунта.
+    Чтобы зайти снова перейдите по <a href="{% url 'account:login' %}">ссылке</a>
+</p>
+{% endblock %}
