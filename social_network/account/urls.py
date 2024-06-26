@@ -19,5 +19,6 @@ urlpatterns = [
          name="password_reset_confirm"),
     path("password-reset/complete/", auth_views.PasswordResetCompleteView.as_view(extra_context={"title": "Login"}),
          name="password_reset_complete"),
-    path("register/", views.register, name="register")
+    path("register/", views.register, name="register"),
+    path("edit/", views.edit, name="edit"),
 ]
