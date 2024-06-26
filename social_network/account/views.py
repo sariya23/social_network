@@ -1,4 +1,5 @@
-from django.contrib.auth.views import PasswordChangeDoneView, PasswordChangeView
+from django.contrib.auth.views import PasswordChangeDoneView, PasswordChangeView, PasswordResetView, \
+    PasswordResetDoneView, PasswordResetConfirmView
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.contrib.auth import logout
@@ -17,3 +18,18 @@ def logout_user(request: HttpRequest) -> HttpResponse:
 
 class CustomPasswordChange(PasswordChangeView):
     success_url = reverse_lazy("account:password_change_done")
+
+
+class CustomPasswordResetView(PasswordResetView):
+    success_url = reverse_lazy("account:password_reset_done")
+    extra_context = {"title": "Сбросить пароль"}
+
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    success_url = reverse_lazy("account:password_reset_confirm")
+    extra_context = {"title": "Сбросить пароль"}
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    success_url = reverse_lazy("account:password_reset_complete")
+    extra_context = {"title": "Сбросить пароль"}
