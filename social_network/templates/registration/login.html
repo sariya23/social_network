@@ -2,11 +2,12 @@
 
 {% block content %}
 <h1>Log-in</h1>
+<p>Нет аккаунта? <a href="{% url 'account:register' %}">Зарегестрируйтесь!</a></p>
 {% if form.errors %}
 <p>
     Логин и пароль не совпадают.
 </p>
-{% else %}
+{% endif %}
 <div class="login-form">
     <form method="POST" action="{% url 'account:login' %}">
         {% csrf_token %}
@@ -18,5 +19,4 @@
         <a href="{% url 'account:password_reset' %}">Забыли пароль?</a>
     </p>
 </div>
-{% endif %}
 {% endblock %}
