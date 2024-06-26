@@ -45,6 +45,7 @@ def register(request: HttpRequest) -> HttpResponse:
         user_form = RegistrationForm(request.POST)
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
+            print(user_form.cleaned_data["password1"])
             new_user.set_password(user_form.cleaned_data["password1"])
             new_user.save()
             Profile.objects.create(user=new_user)
