@@ -37,7 +37,8 @@ class UserEditForm(forms.ModelForm):
         email = self.cleaned_data["email"]
 
         if get_user_model().objects.filter(email=email).exists():
-            raise forms.ValidationError("Такой email уже есть")
+            if get_user_model().objects.get(email=email).email != email:
+                raise forms.ValidationError("Такой email уже есть")
         return email
 
 
