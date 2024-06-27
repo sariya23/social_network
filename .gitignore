@@ -3,3 +3,6 @@
 */*/__pycache__/
 */*/*/__pycache__/
 venv
+social_network/cert.crt
+social_network/cert.key
+.env
