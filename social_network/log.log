@@ -1,2 +1,0 @@
-14:47:24,250 django.security.csrf WARNING Forbidden (CSRF token from POST incorrect.): /edit/
-14:48:29,20 root INFO <class 'django.core.handlers.wsgi.WSGIRequest'>
