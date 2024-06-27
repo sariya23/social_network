@@ -53,6 +53,7 @@ class Image(models.Model):
     image = models.ImageField(upload_to='images/%Y/%m/%d')
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
+    user_like = models.ManyToManyField(get_user_model(), related_name="likes", blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
