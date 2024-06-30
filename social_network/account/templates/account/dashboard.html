@@ -5,4 +5,13 @@
 <h1>Dashboard</h1>
 <p>Welcome to dashboard. Можно <a href="{% url 'account:edit' %}">редактировать</a> свой профиль. Или <a
         href="{% url 'account:password_change' %}">сменить пароль</a></p>
+{% with total_images_crated=request.user.images_created.count %}
+<p>
+    У вас сохранено в закладки {{ total_images_created }} изображений(я).
+</p>
+{% endwith %}
+<p>
+    Сохраните эту кнопку в панель закладок для того, чтобы сохранять изображения с других сайтов ->
+    <a href="javascript:{% include 'book_marklet_launcher.js' %}" class="button">Сохрани это</a>
+</p>
 {% endblock %}
