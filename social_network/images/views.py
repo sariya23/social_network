@@ -1,9 +1,15 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from .forms import ImageForm
+from .models import Image
+
+
+def image_detail(request: HttpRequest, image_id: int, slug: str) -> HttpResponse:
+    image = get_object_or_404(Image, pk=image_id, slug=slug)
+    return render(request, "images/image/detail.html", {"section": "images", "image": image, "title": image.title})
 
 
 @login_required

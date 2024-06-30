@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.text import slugify
+from django.urls import reverse
 
 
 def translate_to_english(text: str) -> str:
@@ -59,3 +60,6 @@ class Image(models.Model):
         if not self.slug:
             self.slug = translate_to_english(self.title)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("images:image_detail", args=[self.pk, self.slug])
