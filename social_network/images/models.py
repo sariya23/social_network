@@ -56,6 +56,7 @@ class Image(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     user_like = models.ManyToManyField(get_user_model(), related_name="likes", blank=True)
 
+    objects = models.Manager()
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = translate_to_english(self.title)

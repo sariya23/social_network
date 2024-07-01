@@ -1,7 +1,10 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.core.exceptions import ObjectDoesNotExist
+
 
 from .forms import ImageForm
 from .models import Image
@@ -25,3 +28,19 @@ def image_create(request: HttpRequest) -> HttpResponse:
     else:
         form = ImageForm(request.GET)
     return render(request, "images/image/create.html", {"section": "images", "form": form, "title": "Загрузить картинку"})
+
+
+@login_required
+@require_POST
+def image_like(request: HttpRequest):
+    image_id = request.POST.get("id")
+    action = request.POST.get("action")
+
+    if image_id and action:
+        image = get_object_or_404(Image, pk=image_id)
+        if action == "like":
+            image.user_like.add(request.user)
+        else:
+            image.user_like.remove(request.user)
+        return JsonResponse({"status": "ok"})
+    return JsonResponse({"status": "ok"})

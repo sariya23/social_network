@@ -27,11 +27,9 @@ function bookmarkletLaunch() {
     imagesFound.innerHTML = "";
     bookmarklet.style.display = "block";
 
-    bookmarklet.
-        querySelector("#close").
-        addEventListener(
-            "click",
-            () => bookmarklet.style.display = "none"
+    bookmarklet.querySelector("#close").addEventListener(
+        "click",
+        () => bookmarklet.style.display = "none"
     );
     const images = document.querySelectorAll("img[src$='.jpg'], img[src$='.jpeg'], img[src$='.png']");
     images.forEach(image => {
