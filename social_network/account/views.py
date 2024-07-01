@@ -93,6 +93,9 @@ def user_follow(request: HttpRequest) -> JsonResponse:
 
     if user_id and action:
         user = get_object_or_404(User, pk=user_id, is_active=True)
+        if user.pk == request.user.id:
+            messages.error(request, "Нельзя подписаться на самого себя")
+            return JsonResponse({"status": "error"})
         if action == "follow":
             Contact.objects.get_or_create(user_from=request.user, user_to=user)
         else:
