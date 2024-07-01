@@ -1,10 +1,10 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.core.exceptions import ObjectDoesNotExist
-
 
 from .forms import ImageForm
 from .models import Image
@@ -27,7 +27,8 @@ def image_create(request: HttpRequest) -> HttpResponse:
             return redirect(new_image.get_absolute_url())
     else:
         form = ImageForm(request.GET)
-    return render(request, "images/image/create.html", {"section": "images", "form": form, "title": "Загрузить картинку"})
+    return render(request, "images/image/create.html",
+                  {"section": "images", "form": form, "title": "Загрузить картинку"})
 
 
 @login_required
@@ -44,3 +45,25 @@ def image_like(request: HttpRequest):
             image.user_like.remove(request.user)
         return JsonResponse({"status": "ok"})
     return JsonResponse({"status": "ok"})
+
+
+@login_required
+def image_list(request: HttpRequest) -> HttpResponse:
+    images = Image.objects.all()
+    paginator = Paginator(images, 8)
+    page = request.GET.get("page")
+    images_only = request.GET.get("images_only")
+    images_for_page = None
+
+    try:
+        images_for_page = paginator.page(page)
+    except PageNotAnInteger:
+        images_for_page = paginator.page(1)
+    except EmptyPage:
+        if images_only:
+            return HttpResponse("")
+        images_for_page = paginator.page(paginator.num_pages)
+
+    if images_only:
+        return render(request, "images/image/list_images.html", {"section": "images", "images": images_for_page, "title": "Картинки"})
+    return render(request, "images/image/list.html", {"section": "images", "images": images, "title": "Картинки"})

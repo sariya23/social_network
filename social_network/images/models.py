@@ -48,7 +48,7 @@ class Image(models.Model):
         ordering = ["-created"]
 
     user = models.ForeignKey(get_user_model(), related_name="images", on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=300)
     slug = models.SlugField(max_length=200, unique=True)
     url = models.URLField(max_length=2000)
     image = models.ImageField(upload_to='images/%Y/%m/%d')
