@@ -1,4 +1,4 @@
-import os
+from django.urls import reverse_lazy
 from pathlib import Path
 
 from .config import envs
@@ -152,6 +152,9 @@ SOCIAL_AUTH_PIPELINE = [
     'social_core.pipeline.user.user_details',
 ]
 
+ABSOLUTE_URL_OVERRIDES = {
+    "auth.user": lambda user: reverse_lazy("account:detail", args=[user.username])
+}
 
 if DEBUG:
     import mimetypes
